@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julio Cesar Lopes Filho — Software Engineer</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Portfólio de Engenharia de Software de Julio Cesar Lopes Filho. React, Node.js, Python, AWS — Soluções de alta performance, automações e arquitetura." />
+  <meta name="author" content="Julio Cesar Lopes Filho" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Julio Cesar Lopes Filho — Software Engineer" />
+  <meta property="og:description" content="React · Node.js · Python · AWS — Alta performance, automações e arquitetura." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://juliojclf.github.io" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== CSS VARIABLES & DESIGN SYSTEM ===== */
+    :root {
+      /* Palette */
+      --bg-base:        #08090a;
+      --bg-surface:     #0f1115;
+      --bg-card:        #14171d;
+      --bg-card-hover:  #191d25;
+      --border-subtle:  #212631;
+      --border-focus:   #303846;
+
+      /* Tech Green Accent */
+      --accent-green:     #10b981;
+      --accent-green-bright: #34d399;
+      --accent-green-dim: rgba(16, 185, 129, 0.08);
+      --accent-green-glow: rgba(16, 185, 129, 0.2);
+
+      /* Typography Colors */
+      --text-main:      #f3f4f6;
+      --text-muted:     #9ca3af;
+      --text-dim:       #6b7280;
+
+      /* Tokens */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', "Fira Code", monospace;
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --radius-sm: 4px;
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== RESET & BASE STYLES ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-base);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      background-color: var(--bg-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(var(--border-subtle) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glowing header backdrop */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, var(--accent-green-dim) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(40px);
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ===== LANGUAGE VISIBILITY CONTROL (ATS FRIENDLY) ===== */
+    .lang-en {
+      display: none !important;
+    }
+    .lang-pt {
+      display: inline;
+    }
+    .lang-block.lang-pt {
+      display: block;
+    }
+
+    html[lang="en"] .lang-pt {
+      display: none !important;
+    }
+    html[lang="en"] .lang-en {
+      display: inline !important;
+    }
+    html[lang="en"] .lang-block.lang-en {
+      display: block !important;
+    }
+
+    /* ===== NAVIGATION BAR ===== */
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background-color: rgba(8, 9, 10, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    .nav-bar.scrolled {
+      border-bottom-color: var(--border-focus);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-brand span {
+      color: var(--accent-green);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      color: var(--text-main);
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .lang-btn.active {
+      color: var(--bg-base);
+      background-color: var(--accent-green);
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: 60px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent-green-bright);
+      background-color: var(--accent-green-dim);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background-color: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 .highlight {
+      color: var(--accent-green);
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin-bottom: 32px;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      color: var(--bg-base);
+      background-color: var(--accent-green);
+      border: 1px solid var(--accent-green);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-green-bright);
+      box-shadow: 0 4px 16px var(--accent-green-glow);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      color: var(--text-main);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-focus);
+      background-color: var(--bg-card);
+    }
+
+    /* ===== METRICS ===== */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      padding: 40px 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 60px;
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .metric-value {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .metric-value::after {
+      content: ' ';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background-color: var(--accent-green);
+      border-radius: 50%;
+      margin-left: 2px;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ===== SECTIONS CONTAINER ===== */
+    .section-header {
+      margin-bottom: 32px;
+    }
+
+    .section-subtitle {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-green);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .section-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .section {
+      padding-bottom: 80px;
+    }
+
+    /* ===== PROJECTS GRID ===== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-focus);
+      background-color: var(--bg-card-hover);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-top {
+      margin-bottom: 24px;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .project-icon {
+      width: 36px;
+      height: 36px;
+      background-color: var(--accent-green-dim);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+      color: var(--accent-green-bright);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background-color: var(--text-dim);
+      border-radius: 50%;
+    }
+
+    .project-card:hover .project-status {
+      color: var(--accent-green-bright);
+    }
+
+    .project-card:hover .project-status::before {
+      background-color: var(--accent-green-bright);
+      box-shadow: 0 0 6px var(--accent-green);
+    }
+
+    .project-name {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .project-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: var(--transition);
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      width: 100%;
+    }
+
+    .project-card:hover .project-link {
+      color: var(--accent-green-bright);
+    }
+
+    .project-link svg {
+      transition: transform var(--transition);
+    }
+
+    .project-link:hover svg {
+      transform: translateX(2px);
+    }
+
+    /* ===== EXPERIENCE TIMELINE ===== */
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      bottom: 8px;
+      left: 0;
+      width: 1px;
+      background-color: var(--border-subtle);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-node {
+      position: absolute;
+      left: -24px;
+      top: 8px;
+      width: 9px;
+      height: 9px;
+      background-color: var(--bg-base);
+      border: 2px solid var(--border-subtle);
+      border-radius: 50%;
+      z-index: 2;
+      transition: var(--transition);
+    }
+
+    .timeline-item:hover .timeline-node {
+      border-color: var(--accent-green);
+      background-color: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .timeline-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .timeline-title h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .timeline-company {
+      font-size: 14px;
+      color: var(--accent-green-bright);
+      margin-top: 2px;
+    }
+
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .timeline-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* Collapsible Experience Section */
+    .timeline-collapsible {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .timeline-collapsible.expanded {
+      grid-template-rows: 1fr;
+    }
+
+    .timeline-details {
+      min-height: 0;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      padding-bottom: 4px;
+    }
+
+    .timeline-details ul {
+      padding-left: 18px;
+      margin-top: 8px;
+    }
+
+    .timeline-details li {
+      margin-bottom: 6px;
+    }
+
+    .expand-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent-green);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 0;
+      margin-bottom: 14px;
+      transition: var(--transition);
+    }
+
+    .expand-btn:hover {
+      color: var(--accent-green-bright);
+    }
+
+    .expand-btn .arrow-icon {
+      transition: transform var(--transition);
+    }
+
+    .expand-btn.active .arrow-icon {
+      transform: rotate(180deg);
+    }
+
+    .timeline-techs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .timeline-tech {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      background-color: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 40px 0;
+      margin-top: 40px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      color: var(--text-dim);
+      transition: var(--transition);
+    }
+
+    .footer-link:hover {
+      color: var(--text-muted);
+    }
+
+    /* ===== RESPONSIVE STYLES ===== */
+    @media (max-width: 768px) {
+      .hero {
+        padding-top: 100px;
+        padding-bottom: 40px;
+      }
+      .nav-links {
+        gap: 16px;
+      }
+      .nav-link.nav-hide {
+        display: none;
+      }
+      .metrics {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .timeline-header {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .timeline-date {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav-bar" id="nav-bar" role="navigation" aria-label="Main Navigation">
+    <div class="wrapper nav-inner">
+      <a href="#" class="nav-brand" aria-label="Home">
+        JCLF<span>.dev</span>
+      </a>
+      
+      <div class="nav-links">
+        <a href="#projects" class="nav-link">
+          <span class="lang-pt">Projetos</span>
+          <span class="lang-en">Projects</span>
+        </a>
+        <a href="#experience" class="nav-link">
+          <span class="lang-pt">Experiência</span>
+          <span class="lang-en">Experience</span>
+        </a>
+        <a href="Profile.pdf" target="_blank" rel="noopener noreferrer" class="nav-link nav-hide" id="btn-nav-cv">
+          <span class="lang-pt">Currículo PDF</span>
+          <span class="lang-en">Resume PDF</span>
+        </a>
+        
+        <!-- Language Select Toggle -->
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="pt" onclick="switchLanguage('pt')">PT</button>
+          <button class="lang-btn" data-lang="en" onclick="switchLanguage('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO HEADER ===== -->
+  <header class="hero wrapper" id="hero">
+    <div class="hero-badge">
+      <span class="lang-pt">Engenheiro de Software &amp; Agentic Dev</span>
+      <span class="lang-en">Software Engineer &amp; Agentic Dev</span>
+    </div>
+    <h1 id="hero-title">
+      Julio Cesar <span class="highlight">Lopes Filho</span>
+    </h1>
+    <p class="hero-desc">
+      <span class="lang-pt">Engenheiro de software full-stack com mais de 6 anos de experiência. Especializado em construir aplicações resilientes, arquitetura orientada a serviços e automações inteligentes que otimizam processos reais.</span>
+      <span class="lang-en">Full-stack software engineer with 6+ years of experience. Specialized in building resilient applications, service-oriented architecture, and intelligent automation systems optimizing real-world operations.</span>
+    </p>
+    <div class="hero-links">
+      <a href="https://github.com/JulioJCLF" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-github">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/jclfs/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" id="btn-linkedin">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:juliolopesbfg@gmail.com" class="btn btn-secondary" id="btn-email">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        Email
+      </a>
+      <a href="Profile.pdf" download="Julio_Cesar_Lopes_CV.pdf" class="btn btn-secondary" id="btn-download-cv">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <span class="lang-pt">Baixar CV PDF</span>
+        <span class="lang-en">Download PDF Resume</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== MAIN SECTION ===== -->
+  <main class="wrapper">
+
+    <!-- METRICS -->
+    <section class="metrics" aria-label="Métricas de Carreira">
+      <div class="metric-item">
+        <div class="metric-value">
+          <span class="lang-pt">6+ Anos</span>
+          <span class="lang-en">6+ Years</span>
+        </div>
+        <div class="metric-label">
+          <span class="lang-pt">Experiência Profissional</span>
+          <span class="lang-en">Professional Experience</span>
+        </div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">15+</div>
+        <div class="metric-label">
+          <span class="lang-pt">Tecnologias Dominadas</span>
+          <span class="lang-en">Technologies Mastered</span>
+        </div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">250k+</div>
+        <div class="metric-label">
+          <span class="lang-pt">Usuários Impactados</span>
+          <span class="lang-en">Users Impacted</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects" aria-label="Projetos">
+      <div class="section-header">
+        <div class="section-subtitle">
+          <span class="lang-pt">Código e Engenharia</span>
+          <span class="lang-en">Code and Engineering</span>
+        </div>
+        <h2>
+          <span class="lang-pt">Projetos em Destaque</span>
+          <span class="lang-en">Featured Projects</span>
+        </h2>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project: Crawler -->
+        <article class="project-card" id="project-crawler">
+          <div class="card-top">
+            <div class="project-header">
+              <div class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1 -4 10 15.3 15.3 0 0 1 -4 -10 15.3 15.3 0 0 1 4 -10z"/></svg>
+              </div>
+              <div class="project-status">Active</div>
+            </div>
+            <h3 class="project-name">Crawler</h3>
+            <p class="project-desc">
+              <span class="lang-pt">Script automatizado para extração de dados e bypass estruturado de defesas anti-scraping.</span>
+              <span class="lang-en">Automated script for data extraction and structured bypass of anti-scraping defenses.</span>
+            </p>
+          </div>
+          <div class="card-bottom">
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Scraping</span>
+              <span class="project-tag">Automation</span>
+            </div>
+            <a href="https://github.com/JulioJCLF/Crawler" target="_blank" rel="noopener noreferrer" class="project-link">
+              <span class="lang-pt">Ver repositório</span>
+              <span class="lang-en">View repository</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project: Armory -->
+        <article class="project-card" id="project-armory">
+          <div class="card-top">
+            <div class="project-header">
+              <div class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <div class="project-status">Active</div>
+            </div>
+            <h3 class="project-name">Armory</h3>
+            <p class="project-desc">
+              <span class="lang-pt">Sistema de gerenciamento de inventário com interface em React e backend em Node.js.</span>
+              <span class="lang-en">Inventory management system with a React interface and Node.js backend.</span>
+            </p>
+          </div>
+          <div class="card-bottom">
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">Architecture</span>
+            </div>
+            <a href="https://github.com/JulioJCLF/Armory" target="_blank" rel="noopener noreferrer" class="project-link">
+              <span class="lang-pt">Ver repositório</span>
+              <span class="lang-en">View repository</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project: Spartan -->
+        <article class="project-card" id="project-spartan">
+          <div class="card-top">
+            <div class="project-header">
+              <div class="project-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div class="project-status">Active</div>
+            </div>
+            <h3 class="project-name">Spartan</h3>
+            <p class="project-desc">
+              <span class="lang-pt">Website institucional e portal para clientes focado em performance, SEO e usabilidade.</span>
+              <span class="lang-en">Institutional website and client portal focused on performance, SEO, and usability.</span>
+            </p>
+          </div>
+          <div class="card-bottom">
+            <div class="project-tags">
+              <span class="project-tag">HTML/CSS</span>
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">Web Design</span>
+            </div>
+            <a href="https://github.com/JulioJCLF/Spartan" target="_blank" rel="noopener noreferrer" class="project-link">
+              <span class="lang-pt">Ver repositório</span>
+              <span class="lang-en">View repository</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE / TIMELINE -->
+    <section class="section" id="experience" aria-label="Histórico Profissional">
+      <div class="section-header">
+        <div class="section-subtitle">
+          <span class="lang-pt">Carreira e Contribuições</span>
+          <span class="lang-en">Career and Contributions</span>
+        </div>
+        <h2>
+          <span class="lang-pt">Experiência Profissional</span>
+          <span class="lang-en">Professional Experience</span>
+        </h2>
+      </div>
+
+      <div class="timeline">
+        <!-- 1. Korr -->
+        <div class="timeline-item" id="project-korr">
+          <div class="timeline-node" aria-hidden="true"></div>
+          <div class="timeline-header">
+            <div class="timeline-title">
+              <h3>
+                <span class="lang-pt">Full Stack Engineer | Agentic Software Engineer</span>
+                <span class="lang-en">Full Stack Engineer | Agentic Software Engineer</span>
+              </h3>
+              <div class="timeline-company">Korr (New York City Metro Area)</div>
+            </div>
+            <div class="timeline-date">
+              <span class="lang-pt">Jan 2026 — Presente</span>
+              <span class="lang-en">Jan 2026 — Present</span>
+            </div>
+          </div>
+          <p class="timeline-desc">
+            <span class="lang-pt">Desenvolvimento de pipelines ETL (Redshift para OpenSearch) e manutenção de sistema HIPAA-compliant na AWS.</span>
+            <span class="lang-en">Developed large-scale ETL pipelines (Redshift to OpenSearch) and maintained HIPAA-compliant B2B systems on AWS.</span>
+          </p>
+          <div class="timeline-collapsible" id="collapsible-korr">
+            <div class="timeline-details">
+              <ul class="lang-block lang-pt">
+                <li>Desenvolvimento e otimização de pipelines ETL escaláveis extraindo dados do Redshift para OpenSearch para milhões de registros.</li>
+                <li>Manutenção de sistema multi-tenant de sinistros de seguros com infraestrutura como código (AWS CDK), integrando DynamoDB, SQS, S3 e OpenSearch.</li>
+                <li>Arquitetura e suporte em conformidade com as normas de segurança HIPAA.</li>
+                <li>Gestão de monorepo React/Node.js para SaaS B2B, permitindo customização dinâmica de esquemas para novos clientes.</li>
+              </ul>
+              <ul class="lang-block lang-en">
+                <li>Engineered and optimized large-scale ETL pipelines transferring legacy data from Redshift to OpenSearch for millions of records.</li>
+                <li>Maintained multi-tenant insurance claims processing systems via AWS CDK, integrating DynamoDB, SQS, S3, and OpenSearch.</li>
+                <li>Architected and supported systems to meet strict HIPAA compliance standards.</li>
+                <li>Managed React/Node.js monorepo for a B2B insurance SaaS platform, enabling customer-specific dynamic schemas.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="expand-btn" onclick="toggleTimeline('korr', this)">
+            <span class="btn-text">
+              <span class="lang-pt">Detalhes</span>
+              <span class="lang-en">Details</span>
+            </span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="timeline-techs">
+            <span class="timeline-tech">React</span>
+            <span class="timeline-tech">Node.js</span>
+            <span class="timeline-tech">AWS CDK</span>
+            <span class="timeline-tech">OpenSearch</span>
+            <span class="timeline-tech">DynamoDB</span>
+            <span class="timeline-tech">TypeScript</span>
+          </div>
+        </div>
+
+        <!-- 2. Clinicorp -->
+        <div class="timeline-item" id="project-clinicorp">
+          <div class="timeline-node" aria-hidden="true"></div>
+          <div class="timeline-header">
+            <div class="timeline-title">
+              <h3>
+                <span class="lang-pt">Full Stack Engineer | Software Engineer</span>
+                <span class="lang-en">Full Stack Engineer | Software Engineer</span>
+              </h3>
+              <div class="timeline-company">Clinicorp Solutions</div>
+            </div>
+            <div class="timeline-date">Aug 2025 — Dec 2025</div>
+          </div>
+          <p class="timeline-desc">
+            <span class="lang-pt">Arquitetura e desenvolvimento de sistema fiscal de ponta a ponta e otimização do onboarding de clientes.</span>
+            <span class="lang-en">Architected and delivered end-to-end tax invoicing system and optimized client onboarding.</span>
+          </p>
+          <div class="timeline-collapsible" id="collapsible-clinicorp">
+            <div class="timeline-details">
+              <ul class="lang-block lang-pt">
+                <li>Arquitetura e entrega do novo sistema de faturamento fiscal de ponta a ponta, suportando toda a base de usuários pagantes.</li>
+                <li>Resolução de incidentes de pagamento críticos para transações de alto valor (>10k BRL), garantindo retenção de receita.</li>
+                <li>Otimização de processos de onboarding com ferramentas de importação de dados fiscais, reduzindo significativamente o tempo de setup.</li>
+              </ul>
+              <ul class="lang-block lang-en">
+                <li>Architected and delivered the new end-to-end tax invoicing system supporting the entire paying user base.</li>
+                <li>Troubleshot and resolved critical payment incidents for high-value transactions (>10k BRL), ensuring revenue retention.</li>
+                <li>Optimized client onboarding by building fiscal data import tools, drastically reducing setup time.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="expand-btn" onclick="toggleTimeline('clinicorp', this)">
+            <span class="btn-text">
+              <span class="lang-pt">Detalhes</span>
+              <span class="lang-en">Details</span>
+            </span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="timeline-techs">
+            <span class="timeline-tech">React</span>
+            <span class="timeline-tech">Node.js</span>
+            <span class="timeline-tech">Fiscal APIs</span>
+            <span class="timeline-tech">Database Tuning</span>
+          </div>
+        </div>
+
+        <!-- 3. Upstart 13 -->
+        <div class="timeline-item" id="project-upstart">
+          <div class="timeline-node" aria-hidden="true"></div>
+          <div class="timeline-header">
+            <div class="timeline-title">
+              <h3>
+                <span class="lang-pt">Senior Software Engineer | Frontend Developer</span>
+                <span class="lang-en">Senior Software Engineer | Frontend Developer</span>
+              </h3>
+              <div class="timeline-company">Upstart 13 (Texas, USA)</div>
+            </div>
+            <div class="timeline-date">Nov 2022 — Aug 2025</div>
+          </div>
+          <p class="timeline-desc">
+            <span class="lang-pt">Migração de plataforma legada para fórum moderno para 250k+ usuários ativos, focando em velocidade e SEO.</span>
+            <span class="lang-en">Migration of legacy platform to modern forum solution for 250k+ active users, optimizing performance and SEO.</span>
+          </p>
+          <div class="timeline-collapsible" id="collapsible-upstart">
+            <div class="timeline-details">
+              <ul class="lang-block lang-pt">
+                <li>Desenvolvimento de funcionalidades para aumento de eficiência operacional e usabilidade, impactando diretamente mais de 100 colaboradores.</li>
+                <li>Refatoração e otimização de fluxos de criação de conteúdo, alavancando a geração de leads para mais de 200 potenciais clientes.</li>
+                <li>Migração completa de fórum legada para arquitetura moderna em NextJS, suportando com sucesso mais de 250 mil usuários ativos sem interrupções.</li>
+                <li>Otimização profunda de performance web e SEO, resultando em aumento de indexação e visibilidade nos motores de busca.</li>
+              </ul>
+              <ul class="lang-block lang-en">
+                <li>Developed innovative features enhancing operational efficiency and UX for 100+ employees.</li>
+                <li>Refactored and optimized content creation workflows, boosting lead generation for 200+ prospective customers.</li>
+                <li>Migrated legacy platform to a modern NextJS forum solution, successfully transitioning 250k+ active users without downtime.</li>
+                <li>Focused heavily on web performance and SEO optimization, significantly reducing page load times.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="expand-btn" onclick="toggleTimeline('upstart', this)">
+            <span class="btn-text">
+              <span class="lang-pt">Detalhes</span>
+              <span class="lang-en">Details</span>
+            </span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="timeline-techs">
+            <span class="timeline-tech">NextJS</span>
+            <span class="timeline-tech">React</span>
+            <span class="timeline-tech">TypeScript</span>
+            <span class="timeline-tech">SEO Optimization</span>
+          </div>
+        </div>
+
+        <!-- 4. Inspira -->
+        <div class="timeline-item" id="project-inspira">
+          <div class="timeline-node" aria-hidden="true"></div>
+          <div class="timeline-header">
+            <div class="timeline-title">
+              <h3>
+                <span class="lang-pt">Software Engineer | Founding Team</span>
+                <span class="lang-en">Software Engineer | Founding Team</span>
+              </h3>
+              <div class="timeline-company">Inspira</div>
+            </div>
+            <div class="timeline-date">May 2021 — Nov 2022</div>
+          </div>
+          <p class="timeline-desc">
+            <span class="lang-pt">Desenvolvimento do SaaS MVP e otimização de buscas GraphQL, reduzindo em 40% o tempo de resposta do servidor.</span>
+            <span class="lang-en">Co-founded SaaS MVP and optimized GraphQL search performance, decreasing server response times by 40%.</span>
+          </p>
+          <div class="timeline-collapsible" id="collapsible-inspira">
+            <div class="timeline-details">
+              <ul class="lang-block lang-pt">
+                <li>Desenvolvimento do MVP SaaS do zero utilizando React, GraphQL e Material UI, gerando $25k de receita em 6 meses.</li>
+                <li>Redução de mais de 40% no tempo de resposta do servidor através da otimização de queries frontend em GraphQL.</li>
+                <li>Arquitetura escalável baseada em Atomic Design e implementação de cobertura completa de testes E2E.</li>
+              </ul>
+              <ul class="lang-block lang-en">
+                <li>Co-founded SaaS MVP using React, React Query, GraphQL, and Material UI, generating $25k in revenue in 6 months.</li>
+                <li>Reduced server response times by 40% through GraphQL query optimization.</li>
+                <li>Developed robust frontend architecture based on Atomic Design principles and E2E testing protocols.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="expand-btn" onclick="toggleTimeline('inspira', this)">
+            <span class="btn-text">
+              <span class="lang-pt">Detalhes</span>
+              <span class="lang-en">Details</span>
+            </span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="timeline-techs">
+            <span class="timeline-tech">React</span>
+            <span class="timeline-tech">GraphQL</span>
+            <span class="timeline-tech">Material UI</span>
+            <span class="timeline-tech">E2E Tests</span>
+          </div>
+        </div>
+
+        <!-- 5. Coderockr -->
+        <div class="timeline-item" id="project-coderockr">
+          <div class="timeline-node" aria-hidden="true"></div>
+          <div class="timeline-header">
+            <div class="timeline-title">
+              <h3>
+                <span class="lang-pt">Frontend Developer | Software Engineer</span>
+                <span class="lang-en">Frontend Developer | Software Engineer</span>
+              </h3>
+              <div class="timeline-company">Coderockr</div>
+            </div>
+            <div class="timeline-date">May 2020 — Apr 2021</div>
+          </div>
+          <p class="timeline-desc">
+            <span class="lang-pt">Manutenção de app mobile de frotas (50k veículos/dia) e criação de blog NextJS para ONG internacional.</span>
+            <span class="lang-en">Developed features for fleet management Mobile App (50k vehicles daily) and built NextJS blog for international NGO.</span>
+          </p>
+          <div class="timeline-collapsible" id="collapsible-coderockr">
+            <div class="timeline-details">
+              <ul class="lang-block lang-pt">
+                <li>Correções e novos recursos para aplicativo mobile de gerenciamento de frotas (React Native/Node.js) operando mais de 50 mil veículos/dia.</li>
+                <li>Criação de blog corporativo em NextJS integrado ao Prismic CMS para ONG internacional.</li>
+                <li>Construção de landing page focada em causas indígenas durante o período de COVID-19.</li>
+              </ul>
+              <ul class="lang-block lang-en">
+                <li>Delivered features and bug fixes for fleet management Mobile App (React Native/NodeJS) managing 50k+ vehicles daily.</li>
+                <li>Implemented from scratch a blog for an international NGO using NextJS and Prismic CMS.</li>
+                <li>Built a responsive landing page focused on indigenous people support during COVID-19.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="expand-btn" onclick="toggleTimeline('coderockr', this)">
+            <span class="btn-text">
+              <span class="lang-pt">Detalhes</span>
+              <span class="lang-en">Details</span>
+            </span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="timeline-techs">
+            <span class="timeline-tech">React Native</span>
+            <span class="timeline-tech">NextJS</span>
+            <span class="timeline-tech">Redux</span>
+            <span class="timeline-tech">Prismic CMS</span>
+          </div>
+        </div>
+
+        <!-- 6. Ultra LIMS -->
+        <div class="timeline-item" id="project-ultralims">
+          <div class="timeline-node" aria-hidden="true"></div>
+          <div class="timeline-header">
+            <div class="timeline-title">
+              <h3>
+                <span class="lang-pt">Full Stack Engineer</span>
+                <span class="lang-en">Full Stack Engineer</span>
+              </h3>
+              <div class="timeline-company">Ultra LIMS</div>
+            </div>
+            <div class="timeline-date">Jan 2019 — Mar 2020</div>
+          </div>
+          <p class="timeline-desc">
+            <span class="lang-pt">Customização de relatórios gerando novas fontes de receita e correções gerais em PHP/jQuery.</span>
+            <span class="lang-en">Customized reports driving new revenue streams and completed general PHP/jQuery fixes.</span>
+          </p>
+          <div class="timeline-collapsible" id="collapsible-ultralims">
+            <div class="timeline-details">
+              <ul class="lang-block lang-pt">
+                <li>Desenvolvimento de relatórios sob demanda, abrindo novas fontes de receita para o produto principal.</li>
+                <li>Resolução de bugs e melhorias usando PHP, HTML, CSS e JavaScript (jQuery).</li>
+                <li>Otimização do fluxo de reporte de bugs integrando feedback direto de sprints e dinâmicas de Q&A.</li>
+              </ul>
+              <ul class="lang-block lang-en">
+                <li>Delivered report customization creating an additional source of revenue.</li>
+                <li>Solved core issues affecting web application features using PHP, HTML, CSS, and jQuery.</li>
+                <li>Optimized bug-reporting flow based on client feedback and agile sprint planning.</li>
+              </ul>
+            </div>
+          </div>
+          <button class="expand-btn" onclick="toggleTimeline('ultralims', this)">
+            <span class="btn-text">
+              <span class="lang-pt">Detalhes</span>
+              <span class="lang-en">Details</span>
+            </span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="timeline-techs">
+            <span class="timeline-tech">PHP</span>
+            <span class="timeline-tech">JavaScript</span>
+            <span class="timeline-tech">jQuery</span>
+            <span class="timeline-tech">CSS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrapper footer-inner">
+      <div class="footer-copy">
+        <span class="lang-pt">Projetado &amp; desenvolvido por Julio Cesar Lopes</span>
+        <span class="lang-en">Designed &amp; built by Julio Cesar Lopes</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/JulioJCLF" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+        <a href="https://www.linkedin.com/in/jclfs/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        <a href="#hero" class="footer-link">
+          <span class="lang-pt">Topo ↑</span>
+          <span class="lang-en">Top ↑</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CLIENT SCRIPT ===== -->
+  <script>
+    // ===== LOCALIZATION LOGIC (ATS-FRIENDLY DOM SYSTEM) =====
+    let currentLang = 'pt';
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('jclf-lang', lang);
+      
+      // Update HTML attribute
+      document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+
+      // Update button classes
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      // Track switch event
+      if (window.tracker) {
+        window.tracker.trackEvent('language_switch', { selectedLanguage: lang });
+      }
+    }
+
+    // Toggle experience details
+    window.toggleTimeline = function(id, btn) {
+      const collapsible = document.getElementById(`collapsible-${id}`);
+      const isExpanded = collapsible.classList.toggle('expanded');
+      btn.classList.toggle('active', isExpanded);
+      
+      const arrow = btn.querySelector('.arrow-icon');
+      
+      // Track action
+      if (window.tracker) {
+        window.tracker.trackEvent('experience_toggle', {
+          company: id,
+          action: isExpanded ? 'expand' : 'collapse',
+          currentLanguage: currentLang
+        });
+      }
+    };
+
+    // ===== TRACKING & ANALYTICS CLASS =====
+    class PortfolioTracker {
+      constructor(webhookUrl = '') {
+        this.webhookUrl = webhookUrl; // Inserir URL do webhook aqui (ex: Discord, Telegram, custom backend)
+        this.visitorInfo = this.getVisitorInfo();
+        this.init();
+      }
+
+      getVisitorInfo() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          referrer: document.referrer || 'Direct / Bookmark',
+          language: navigator.language || navigator.userLanguage,
+          screenSize: `${window.innerWidth}x${window.innerHeight}`,
+          device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+          utm_source: params.get('utm_source') || '',
+          utm_medium: params.get('utm_medium') || '',
+          utm_campaign: params.get('utm_campaign') || ''
+        };
+      }
+
+      init() {
+        // Envia Page View na entrada do usuário
+        this.trackEvent('page_view', this.visitorInfo);
+
+        // Mapeia Cliques de Contato
+        this.trackClick('#btn-github', 'contact_github');
+        this.trackClick('#btn-linkedin', 'contact_linkedin');
+        this.trackClick('#btn-email', 'contact_email');
+        this.trackClick('#btn-download-cv', 'download_cv_hero');
+        this.trackClick('#btn-nav-cv', 'download_cv_nav');
+
+        // Mapeia Cliques em Projetos
+        this.trackClick('#project-crawler a.project-link', 'project_crawler');
+        this.trackClick('#project-armory a.project-link', 'project_armory');
+        this.trackClick('#project-spartan a.project-link', 'project_spartan');
+      }
+
+      trackClick(selector, eventName) {
+        const el = document.querySelector(selector);
+        if (el) {
+          el.addEventListener('click', () => {
+            this.trackEvent('click_' + eventName, {
+              element: selector,
+              currentLanguage: currentLang
+            });
+          });
+        }
+      }
+
+      trackEvent(name, data) {
+        const payload = {
+          event: name,
+          ...data,
+          timestamp: new Date().toISOString()
+        };
+
+        // Imprime no console (facilita depuração local)
+        console.log('[Analytics Log]:', payload);
+
+        // Se configurado com um webhook real, faz o envio via POST
+        if (this.webhookUrl) {
+          fetch(this.webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).catch(err => console.error('Error sending analytics:', err));
+        }
+
+        /* 
+           DICA DE INTEGRAÇÃO (ATS / OUTRAS PLATAFORMAS):
+           Se desejar enviar dados para Google Analytics (gtag) ou Mixpanel, 
+           basta plugar a chamada correspondente aqui:
+           
+           if (window.gtag) {
+             window.gtag('event', name, data);
+           }
+        */
+      }
+    }
+
+    // Initialize systems
+    (() => {
+      // 1. Initialize Localization
+      const stored = localStorage.getItem('jclf-lang');
+      if (stored && (stored === 'pt' || stored === 'en')) {
+        switchLanguage(stored);
+      } else {
+        const userLang = navigator.language || navigator.userLanguage;
+        if (userLang && userLang.toLowerCase().startsWith('en')) {
+          switchLanguage('en');
+        } else {
+          switchLanguage('pt');
+        }
+      }
+      
+      // 2. Initialize Tracker
+      // OPCIONAL: Para receber logs em tempo real, substitua '' abaixo pela URL do seu Discord/Telegram Webhook
+      window.tracker = new PortfolioTracker('');
+
+      // 3. Scroll listener for nav bar styling
+      const nav = document.getElementById('nav-bar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
