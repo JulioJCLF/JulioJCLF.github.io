@@ -19,37 +19,39 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     /* ===== CSS VARIABLES & DESIGN SYSTEM ===== */
     :root {
-      /* Palette */
-      --bg-base:        #08090a;
-      --bg-surface:     #0f1115;
-      --bg-card:        #14171d;
-      --bg-card-hover:  #191d25;
-      --border-subtle:  #212631;
-      --border-focus:   #303846;
+      /* Palette (Ritmo Design System) */
+      --bg-base:        #0B0B0E;
+      --bg-surface:     #15151A;
+      --bg-card:        #1C1C22;
+      --bg-card-hover:  #25252D;
+      --border-subtle:  #2A2A33;
+      --border-focus:   #3E3E4C;
 
-      /* Tech Green Accent */
-      --accent-green:     #10b981;
-      --accent-green-bright: #34d399;
-      --accent-green-dim: rgba(16, 185, 129, 0.08);
-      --accent-green-glow: rgba(16, 185, 129, 0.2);
+      /* Ritmo Accent (#C8FF3D) */
+      --accent-green:     #C8FF3D;
+      --accent-green-bright: #D4FF66;
+      --accent-green-dim: rgba(200, 255, 61, 0.08);
+      --accent-green-glow: rgba(200, 255, 61, 0.2);
 
       /* Typography Colors */
-      --text-main:      #f3f4f6;
-      --text-muted:     #9ca3af;
-      --text-dim:       #6b7280;
+      --text-main:      #F3F3F6;
+      --text-muted:     #C9C9D3;
+      --text-dim:       #8E8E9C;
+      --accent-ink:     #0B0B0E; /* Dark text for bright accent backgrounds */
 
       /* Tokens */
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', "Fira Code", monospace;
-      --radius-lg: 12px;
-      --radius-md: 8px;
-      --radius-sm: 4px;
-      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --font-display: 'Space Grotesk', var(--font-sans);
+      --radius-lg: 18px; /* Slightly rounder like Ritmo */
+      --radius-md: 12px;
+      --radius-sm: 6px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* ===== RESET & BASE STYLES ===== */
@@ -251,7 +253,7 @@
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(2rem, 5vw, 3.5rem); font-family: var(--font-display);
       font-weight: 700;
       letter-spacing: -1px;
       line-height: 1.15;
@@ -289,7 +291,7 @@
     }
 
     .btn-primary {
-      color: var(--bg-base);
+      color: var(--accent-ink);
       background-color: var(--accent-green);
       border: 1px solid var(--accent-green);
     }
@@ -365,7 +367,7 @@
     }
 
     .section-header h2 {
-      font-size: 24px;
+      font-size: 28px; font-family: var(--font-display);
       font-weight: 700;
       letter-spacing: -0.5px;
     }
@@ -783,7 +785,7 @@
     }
 
     .featured-title {
-      font-size: 32px;
+      font-size: 36px; font-family: var(--font-display);
       font-weight: 700;
       margin-bottom: 16px;
       letter-spacing: -0.5px;
@@ -960,9 +962,9 @@
           </div>
           
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="https://ritmo-production-a4a5.up.railway.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-              <span class="lang-pt">Acessar App</span>
-              <span class="lang-en">Open App</span>
+            <a href="https://ritmo-production-a4a5.up.railway.app/sobre.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              <span class="lang-pt">Ver Website</span>
+              <span class="lang-en">View Website</span>
             </a>
             <a href="https://github.com/JulioJCLF/ritmo" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
               <span class="lang-pt">Ver Repositório</span>
@@ -973,8 +975,8 @@
         </div>
         <div class="featured-visual">
           
-          <img src="https://ritmo-production-a4a5.up.railway.app/landing/desktop-pt.jpg" alt="Ritmo Desktop App" class="lang-pt" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);" />
-          <img src="https://ritmo-production-a4a5.up.railway.app/landing/desktop-en.jpg" alt="Ritmo Desktop App" class="lang-en" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);" />
+          <img src="https://ritmo-production-a4a5.up.railway.app/sobre.html/landing/desktop-pt.jpg" alt="Ritmo Desktop App" class="lang-pt" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);" />
+          <img src="https://ritmo-production-a4a5.up.railway.app/sobre.html/landing/desktop-en.jpg" alt="Ritmo Desktop App" class="lang-en" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md);" />
 
         </div>
       </div>
